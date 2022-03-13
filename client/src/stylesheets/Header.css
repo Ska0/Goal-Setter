@@ -1,0 +1,13 @@
+
+.links-container {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  gap: 20px;
+  padding: 10px;
+  margin-right: 20px;
+}
+
+.links {
+  font-size: 1.4rem;
+}
