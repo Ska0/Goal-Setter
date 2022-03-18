@@ -1,8 +1,8 @@
-import {useState, useEffect} from 'react'
-import { useSelector, useDispatch} from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import {toast} from 'react-toastify'
-import {FaUser} from 'react-icons/fa'
+import { toast } from 'react-toastify'
+import { FaUser } from 'react-icons/fa'
 import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
@@ -14,24 +14,25 @@ function Register() {
     password2: '',
   })
 
-  const { name, email, password, password2 } = formData;
+  const { name, email, password, password2 } = formData
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  )
 
   useEffect(() => {
-    if(isError) {
+    if (isError) {
       toast.error(message)
     }
 
-    if(isSuccess || user) {
+    if (isSuccess || user) {
       navigate('/')
     }
 
     dispatch(reset())
-
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
   const onChange = (e) => {
@@ -44,75 +45,87 @@ function Register() {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    if(password !== password2) {
-      toast.error('Passwords do not match!')
+    if (password !== password2) {
+      toast.error('Passwords do not match')
     } else {
       const userData = {
         name,
-        email, 
-        password,  
+        email,
+        password,
       }
 
       dispatch(register(userData))
     }
   }
 
-  if(isLoading) {
+  if (isLoading) {
     return <Spinner />
   }
 
-    return (
-      <>
-      <section>
+  return (
+    <>
+      <section className='heading'>
         <h1>
           <FaUser /> Register
         </h1>
         <p>Please create an account</p>
       </section>
 
-      <section className="form">
+      <section className='form'>
         <form onSubmit={onSubmit}>
-          <input
-            type="text"
-            id="name" 
-            name="name"
-            value={name}
-            placeholder="Enter your name."
-            onChange={onChange} 
-          />
-          <input
-            type="email"
-            id="email" 
-            name="email"
-            value={email}
-            placeholder="Enter your email."
-            onChange={onChange} 
-          />
-          <input
-            type="password"
-            id="password" 
-            name="password"
-            value={password}
-            placeholder="Enter your password."
-            onChange={onChange} 
-          />
-          <input
-            type="password"
-            id="password2" 
-            name="password2"
-            value={password2}
-            placeholder="Confirm password."
-            onChange={onChange} 
-          />
-          <div>
-            <button type="submit">
+          <div className='form-group'>
+            <input
+              type='text'
+              className='form-control'
+              id='name'
+              name='name'
+              value={name}
+              placeholder='Enter your name'
+              onChange={onChange}
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              type='email'
+              className='form-control'
+              id='email'
+              name='email'
+              value={email}
+              placeholder='Enter your email'
+              onChange={onChange}
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              type='password'
+              className='form-control'
+              id='password'
+              name='password'
+              value={password}
+              placeholder='Enter password'
+              onChange={onChange}
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              type='password'
+              className='form-control'
+              id='password2'
+              name='password2'
+              value={password2}
+              placeholder='Confirm password'
+              onChange={onChange}
+            />
+          </div>
+          <div className='form-group'>
+            <button type='submit' className='btn btn-block'>
               Submit
             </button>
           </div>
         </form>
       </section>
-      </>
-      )
-  }
+    </>
+  )
+}
 
 export default Register
